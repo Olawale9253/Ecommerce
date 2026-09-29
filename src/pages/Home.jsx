@@ -13,8 +13,8 @@ const Home = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") ?? "";
   const { data: products = [], isLoading, isError } = useGetFashionProductsQuery();
-  const newArrivals = products.slice(0, 4);
-  const topSelling = products.slice(4, 8);
+  const newArrivals = products;
+  const topSelling = products.slice(4);
 
   return (
     <>
