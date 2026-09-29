@@ -8,7 +8,7 @@ const Hero = () => {
           <span className="eyebrow">Everyday style, redefined</span>
           <h1 id="hero-title">Find clothes that match your style</h1>
           <p>Browse through our diverse range of carefully crafted garments, designed to bring out your individuality and sense of style.</p>
-          <a className="button-primary" href="#arrivals">Shop the collection <ArrowRight size={17} /></a>
+          <a className="button-primary" href="#arrivals">Shop Now <ArrowRight size={17} /></a>
           <div className="hero-stats" aria-label="Shop.co at a glance">
             <div className="hero-stat"><strong>200+</strong><span>International brands</span></div>
             <div className="hero-stat"><strong>2,000+</strong><span>Quality products</span></div>
