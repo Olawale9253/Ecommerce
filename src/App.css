@@ -64,9 +64,9 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .hero-stat:last-child { padding-right: 0; border: 0; }
 .hero-stat strong { display: block; font-size: 30px; line-height: 1.1; }
 .hero-stat span { display: block; margin-top: 5px; color: #555; font-size: 12px; white-space: nowrap; }
-.hero-spark { position: absolute; color: #111; line-height: 1; pointer-events: none; }
-.hero-spark-large { top: 15%; right: 8%; font-size: 76px; }
-.hero-spark-small { top: 49%; right: 39%; font-size: 48px; }
+.hero-spark { position: absolute; display: block; pointer-events: none; user-select: none; }
+.hero-spark-large { top: 15%; right: 8%; width: clamp(76px, 6vw, 104px); }
+.hero-spark-small { top: 49%; right: 39%; width: clamp(38px, 3.5vw, 56px); }
 
 .brand-strip { background: #111; }
 .brand-strip-inner { min-height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
@@ -293,8 +293,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .hero-stat:last-child { grid-column: 1 / -1; }
   .hero-stat strong { font-size: 23px; }
   .hero-stat span { font-size: 10px; }
-  .hero-spark-large { top: 52%; right: 8%; font-size: 42px; }
-  .hero-spark-small { top: 63%; right: 66%; font-size: 28px; }
+  .hero-spark-large { top: 52%; right: 8%; width: 42px; }
+  .hero-spark-small { top: 63%; right: 66%; width: 28px; }
   .brand-strip-inner { min-height: 118px; flex-wrap: wrap; justify-content: center; gap: 18px 28px; padding-block: 22px; }
   .brand-strip img { max-width: 90px; max-height: 22px; }
   .product-section { padding-block: 54px; }

@@ -6,12 +6,15 @@ import Hero from "../components/home/Hero";
 import Navbar from "../components/Navbar";
 import NewsLetter from "../components/NewsLetter";
 import ProductList from "../components/products/ProductList";
-import { newArrivals, topSelling } from "../data/products";
 import Testimonials from "../components/Testimonials";
+import { useGetFashionProductsQuery } from "../api/fakeStoreApi";
 
 const Home = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") ?? "";
+  const { data: products = [], isLoading, isError } = useGetFashionProductsQuery();
+  const newArrivals = products.slice(0, 4);
+  const topSelling = products.slice(4, 8);
 
   return (
     <>
@@ -20,9 +23,11 @@ const Home = () => {
       <Hero />
       <Brands />
       <main id="shop">
-        <ProductList id="arrivals" title="New arrivals" products={newArrivals} query={query} />
+        {isLoading ? <p className="empty-results page-shell">Loading fashion products...</p> : null}
+        {isError ? <p className="empty-results page-shell">Fashion products could not be loaded. Please try again.</p> : null}
+        {!isLoading && !isError ? <ProductList id="arrivals" title="New arrivals" products={newArrivals} query={query} /> : null}
         <div className="page-shell collection-divider" />
-        <ProductList id="top-selling" title="Top selling" products={topSelling} query={query} />
+        {!isLoading && !isError ? <ProductList id="top-selling" title="Top selling" products={topSelling} query={query} /> : null}
         <section className="style-section page-shell" aria-labelledby="style-heading">
           <div className="style-panel">
             <h2 className="section-heading" id="style-heading">Browse by dress style</h2>

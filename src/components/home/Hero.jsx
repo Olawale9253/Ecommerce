@@ -16,8 +16,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <span className="hero-spark hero-spark-large" aria-hidden="true">✳</span>
-      <span className="hero-spark hero-spark-small" aria-hidden="true">✳</span>
+      <img className="hero-spark hero-spark-large" src="/big-star.svg" alt="" aria-hidden="true" />
+      <img className="hero-spark hero-spark-small" src="/small-star.svg" alt="" aria-hidden="true" />
     </section>
   );
 };

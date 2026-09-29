@@ -71,13 +71,13 @@ The application will then be available at the local URL provided by Vite.
 
 ## Environment Variables
 
-Create a `.env` file in the root of the project:
+Set the API base URL in a `.env` file in the root of the project:
 
 ```env
-VITE_APP_BASEURL=https://fakestoreapi.com
+VITE_API_BASE_URL=https://dummyjson.com
 ```
 
-The application uses this value as the base URL for API requests.
+The application uses this value as the base URL for API requests. Do not commit `.env` files containing local configuration or secrets.
 
 ## RTK Query
 

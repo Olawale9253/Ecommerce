@@ -4,27 +4,23 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/products/ProductCard";
-import { newArrivals, topSelling } from "../data/products";
+import { useGetFashionProductsQuery } from "../api/fakeStoreApi";
 
-const allProducts = [...newArrivals, ...topSelling];
 const collections = {
   "/shop": {
     eyebrow: "The collection",
     title: "Shop all",
     description: "Everyday pieces, considered details, and easy-to-wear favorites.",
-    products: allProducts,
   },
   "/on-sale": {
     eyebrow: "A little less",
     title: "On sale",
     description: "Good finds, now at an even better price.",
-    products: allProducts.filter((product) => product.oldPrice),
   },
   "/new-arrivals": {
     eyebrow: "Just landed",
     title: "New arrivals",
     description: "Fresh additions to your everyday rotation.",
-    products: newArrivals,
   },
 };
 
@@ -38,9 +34,13 @@ const CatalogPage = () => {
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState("featured");
+  const { data: allProducts = [], isLoading, isError } = useGetFashionProductsQuery();
   const collection = collections[pathname] ?? collections["/shop"];
+  const collectionProducts = pathname === "/on-sale"
+    ? allProducts.filter((product) => product.oldPrice)
+    : allProducts;
   const query = (searchParams.get("search") ?? "").trim().toLowerCase();
-  const filteredProducts = collection.products.filter((product) => product.name.toLowerCase().includes(query));
+  const filteredProducts = collectionProducts.filter((product) => product.name.toLowerCase().includes(query));
   const visibleProducts = [...filteredProducts];
 
   if (sortBy === "price-low") visibleProducts.sort((first, second) => first.price - second.price);
@@ -69,7 +69,7 @@ const CatalogPage = () => {
             ))}
           </nav>
           <div className="catalog-toolbar">
-            <p>{visibleProducts.length} {visibleProducts.length === 1 ? "piece" : "pieces"}</p>
+            <p>{isLoading ? "Loading pieces..." : `${visibleProducts.length} ${visibleProducts.length === 1 ? "piece" : "pieces"}`}</p>
             <label className="catalog-sort">Sort by
               <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
                 <option value="featured">Featured</option>
@@ -80,9 +80,11 @@ const CatalogPage = () => {
             </label>
           </div>
           <div className="catalog-grid product-grid">
-            {visibleProducts.length ? visibleProducts.map((product) => <ProductCard key={product.id} product={product} />) : (
+            {isError ? <p className="empty-results">Fashion products could not be loaded. Please try again.</p> : null}
+            {!isLoading && !isError && visibleProducts.length ? visibleProducts.map((product) => <ProductCard key={product.id} product={product} />) : null}
+            {!isLoading && !isError && !visibleProducts.length ? (
               <p className="empty-results">No products match “{searchParams.get("search") ?? ""}”. Try another search.</p>
-            )}
+            ) : null}
           </div>
         </div>
       </main>
