@@ -10,6 +10,7 @@ const Navbar = ({ onSearch }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const cartCount = useSelector((state) => state.cart.items.reduce((count, item) => count + item.quantity, 0));
+  const authUser = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const closeMenus = (event) => {
@@ -84,7 +85,7 @@ const Navbar = ({ onSearch }) => {
             <ShoppingBag size={21} />
             {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
           </Link>
-          <Link className="icon-button account-button" to="/profile" aria-label="Your profile"><UserRound size={20} /></Link>
+          <Link className="icon-button account-button" to={authUser ? "/profile" : "/login"} aria-label={authUser ? "Your profile" : "Sign in to your account"}><UserRound size={20} /></Link>
         </div>
       </div>
     </header>

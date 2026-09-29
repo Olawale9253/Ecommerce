@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
-import { ArrowRight, Check, UserRound } from "lucide-react";
+import { Link, useNavigate } from "react-router";
+import { ArrowRight, Check, LogOut, UserRound } from "lucide-react";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { logoutUser } from "../store/authSlice";
 import { saveProfile as saveProfileAction } from "../store/profileSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const savedProfile = useSelector((state) => state.profile);
+  const authUser = useSelector((state) => state.auth.user);
   const cartCount = useSelector((state) => state.cart.items.reduce((total, item) => total + item.quantity, 0));
-  const [profile, setProfile] = useState(savedProfile);
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState({
+    name: savedProfile.name || authUser?.name || "",
+    email: savedProfile.email || authUser?.email || "",
+  });
   const [saved, setSaved] = useState(false);
 
   const updateField = (event) => {
@@ -25,6 +31,11 @@ const Profile = () => {
     setSaved(true);
   };
 
+  const signOut = async () => {
+    await dispatch(logoutUser());
+    navigate("/", { replace: true });
+  };
+
   return (
     <>
       <Banner />
@@ -34,6 +45,7 @@ const Profile = () => {
         <header className="profile-heading">
           <span className="eyebrow">Your account</span>
           <h1 className="section-heading">Profile</h1>
+          {authUser ? <button className="profile-signout" type="button" onClick={signOut}><LogOut size={15} /> Sign out</button> : null}
         </header>
         <div className="profile-layout">
           <section className="profile-card" aria-labelledby="profile-details-title">

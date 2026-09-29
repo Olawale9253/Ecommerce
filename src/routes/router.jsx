@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import BrandsPage from "../pages/BrandsPage";
+import AuthPage from "../pages/AuthPage";
 import Cart from "../pages/Cart";
 import CatalogPage from "../pages/CatalogPage";
 import Home from "../pages/Home";
@@ -19,6 +20,8 @@ const router = createBrowserRouter([
       { path: "new-arrivals", element: <CatalogPage /> },
       { path: "brands", element: <BrandsPage /> },
       { path: "profile", element: <Profile /> },
+      { path: "login", element: <AuthPage /> },
+      { path: "signup", element: <AuthPage /> },
       { path: "product/:id", element: <ProductDetails /> },
     ],
   },
