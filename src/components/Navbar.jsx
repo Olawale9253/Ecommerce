@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router";
 import { ChevronDown, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
-import { getCartItems, subscribeToCart } from "../store/cartStorage";
 
 const Navbar = ({ onSearch }) => {
   const location = useLocation();
@@ -9,11 +9,7 @@ const Navbar = ({ onSearch }) => {
   const search = new URLSearchParams(location.search).get("search") ?? "";
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(() => getCartItems().reduce((count, item) => count + item.quantity, 0));
-
-  useEffect(() => subscribeToCart(() => {
-    setCartCount(getCartItems().reduce((count, item) => count + item.quantity, 0));
-  }), []);
+  const cartCount = useSelector((state) => state.cart.items.reduce((count, item) => count + item.quantity, 0));
 
   useEffect(() => {
     const closeMenus = (event) => {

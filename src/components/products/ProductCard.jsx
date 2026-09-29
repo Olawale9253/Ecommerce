@@ -1,13 +1,15 @@
 import { Check, Plus, Star } from "lucide-react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router";
-import { addCartItem } from "../../store/cartStorage";
+import { addCartItem } from "../../store/cartSlice";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
 
   const addToCart = () => {
-    addCartItem(product);
+    dispatch(addCartItem(product));
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1200);
   };

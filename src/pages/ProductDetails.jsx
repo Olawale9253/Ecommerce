@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
+import { useDispatch } from "react-redux";
 import { ArrowLeft, Minus, Plus, Star } from "lucide-react";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useGetFashionProductsQuery, useGetProductQuery } from "../api/fakeStoreApi";
-import { addCartItem } from "../store/cartStorage";
+import { addCartItem } from "../store/cartSlice";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const { data: product, isLoading, isError } = useGetProductQuery(id);
   const { data: products = [] } = useGetFashionProductsQuery();
@@ -29,7 +31,7 @@ const ProductDetails = () => {
   }
 
   const addToCart = () => {
-    for (let count = 0; count < quantity; count += 1) addCartItem(product);
+    dispatch(addCartItem({ ...product, quantity }));
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1400);
   };
